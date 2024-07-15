@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- titulo -->
+    <title>Solicitud</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+    <!-- favicon -->
+    <link rel="shortcut icon"
+        href="https://static.vecteezy.com/system/resources/previews/012/178/112/non_2x/warehouse-icon-design-free-vector.jpg"
+        type="image/x-icon">
+
+    <!-- css -->
+    <link rel="stylesheet" href="/request.css">
+
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+
+    <!-- icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+
+</head>
+
+<body>
+
+    <section class="section-header">
+        <p>Solicitud</p>
+        <a href="/">Cerrar Sesion</a>
+    </section>
+
+    <div class="container-hero">
+        <div class="col-form">
+            <section class="section-form">
+                <form action="/request/post/data" method="POST">
+                    <div class="container-table">
+                        <table class="tableRight">
+                            <tr>
+                                <td>
+                                    <label for="numberRequest">
+                                        Numero de solicitud:
+                                    </label>
+                                </td>
+                                <td>
+                                    <input class="sm" type="text" name="" id="numberRequest" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="date">
+                                        Fecha:
+                                    </label>
+                                </td>
+                                <td>
+                                    <input type="date" name="" id="date" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="responsible">
+                                        Responsable:
+                                    </label>
+                                </td>
+                                <td>
+                                    <input type="number" name="responsable" id="responsable" placeholder="DNI" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="area">
+                                        Area:
+                                    </label>
+                                </td>
+                                <td>
+                                    <select id="area" name="area">
+                                        <option disabled selected>Seleccione</option>
+                                        <option>Area 2</option>
+                                        <option>Area 3</option>
+                                        <option>Area 4</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="unidadMedidad">
+                                        Unidad de medida:
+                                    </label>
+                                </td>
+                                <td>
+                                    <input class="sm" type="text" name="unidadMedidad" id="unidadMedidad"
+                                        placeholder=" Unidad" required>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="tableLeft">
+                            <tr>
+                                <td>
+                                    <label for="nameBien">
+                                        Nombre del bien:
+                                    </label>
+                                </td>
+                                <td>
+                                    <div class="container-table-name">
+                                        <table class="table table-name">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Producto</th>
+                                                    <th scope="col">seleccionar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>Papel</td>
+                                                    <td>
+                                                        <label><input type="checkbox" id="cbox1"
+                                                                value="first_checkbox"></label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>Jabon liquido</td>
+                                                    <td>
+                                                        <label><input type="checkbox" id="cbox1"
+                                                                value="first_checkbox"></label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>Plumon - azul</td>
+                                                    <td>
+                                                        <label><input type="checkbox" id="cbox1"
+                                                                value="first_checkbox"></label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">4</th>
+                                                    <td>lapicero - azul</td>
+                                                    <td>
+                                                        <label><input type="checkbox" id="cbox1"
+                                                                value="first_checkbox"></label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">5</th>
+                                                    <td>Alcohol gel</td>
+                                                    <td>
+                                                        <label><input type="checkbox" id="cbox1"
+                                                                value="first_checkbox"></label>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="cantSolicitada">
+                                        Cantidad:
+                                    </label>
+                                </td>
+                                <td>
+                                    <input class="sm" type="number" name="" id="cantSolicitada" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="value">
+                                        Valor unitario:
+                                    </label>
+                                </td>
+                                <td>
+                                    <input class="sm" type="number" name="" id="value" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="fullValue">
+                                        Valor Total:
+                                    </label>
+                                </td>
+                                <td>
+                                    <input class="sm" type="number" name="" id="fullValue" required>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="container-icon">
+                        <button class="btn btn-success">Enviar <i class="bi bi-send-fill"></i></button>
+                    </div>
+
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+        </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+        </script>
+</body>
+
+</html>

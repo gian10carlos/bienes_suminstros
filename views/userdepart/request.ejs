@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- titulo -->
+    <title>Solicitud</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+    <!-- favicon -->
+    <link rel="shortcut icon"
+        href="https://static.vecteezy.com/system/resources/previews/012/178/112/non_2x/warehouse-icon-design-free-vector.jpg"
+        type="image/x-icon">
+
+    <!-- css -->
+    <link rel="stylesheet" href="/request/request.css">
+
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+
+    <!-- icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+
+</head>
+
+<body>
+
+    <section class="section-header">
+        <p class="m-0">Solicitud</p>
+        <a href="/">Cerrar Sesion</a>
+    </section>
+
+    <script>
+        const numberReq = parseInt('<%- numberId %>');
+    </script>
+
+    <div class="container-hero">
+        <div class="col-form">
+            <section class="section-form">
+                <form action="/request/post/data" method="POST">
+                    <div class="container-table col col-12  d-flex justify-content-between">
+                        <div class="block-left col col-5">
+                            <div class="form-group">
+                                <label for="numeroSolicitud">Numero de solicitud:</label>
+                                <input type="text" class="form-control" id="numeroSolicitud" name="number" required
+                                    disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="fecha">Fecha:</label>
+                                <input type="date" class="form-control" id="fecha" name="date">
+                            </div>
+                            <div class="form-group">
+                                <label for="responsable">Responsable:</label>
+                                <input type="text" class="form-control" id="responsable" placeholder="DNI"
+                                    name="responsable">
+                            </div>
+                            <div class="form-group">
+                                <label for="area">Area:</label>
+                                <select class="form-control" id="area">
+                                    <option disabled selected>Seleccione</option>
+                                    <% for(let i=0 ; i < resultA.length; i++){ %>
+                                        <option value="<%- resultA[i].id %>"><%- resultA[i].descripcion %></option>
+                                        <% } %>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="area">Meta:</label>
+                                <select class="form-control" id="meta">
+                                    <option disabled selected>Seleccione</option>
+                                    <% for(let i=0 ; i < resultM.length; i++){ %>
+                                        <option value="<%- resultM[i].id %>"><%- resultM[i].descripcion %></option>
+                                        <% } %>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class=" block-right col col-6">
+                            <div class="container-table-name">
+                                <table class="table table-name">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Producto</th>
+                                            <th scope="col">seleccionar</th>
+                                            <th scope="col">Val/Unit</th>
+                                            <th scope="col">Unit/Med</th>
+                                            <th scope="col">Cant</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if(resultP) %>
+                                            <% for(let i=0 ; i < resultP.length; i ++){ %>
+                                                <tr>
+                                                    <th scope="row"><%- i+1 %></th>
+                                                    <td><%- resultP[i].descripcion %></td>
+                                                    <td>
+                                                        <input type="checkbox" id="<%- resultP[i].id %>">
+                                                    </td>
+                                                    <td>
+                                                        <label><%- resultP[i].precio %></label>
+                                                    </td>
+                                                    <td>
+                                                        <p class="unidMed"><%- resultP[i].unidad_medida %></p>
+                                                    </td>
+                                                    <td><input style="width: 28px; max-width: 28px;" type="text" id="">
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-icon">
+                        <button class="btn btn-success">Enviar <i class="bi bi-send-fill"></i></button>
+                    </div>
+
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+        </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+        </script>
+
+    <script src="/request/request.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+
+</html>
