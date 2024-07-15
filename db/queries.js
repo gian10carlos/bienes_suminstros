@@ -37,8 +37,23 @@ exports.request = {
 
     putBossReq: `UPDATE solicitud SET solicitud.autorizacion_jefe_area = 1 
     WHERE solicitud.numero_solicitud = ?`,
+
+    putManagerReq: `UPDATE solicitud SET solicitud.autorizacion_administracion = 1, solicitud.fecha_salida = ? 
+    WHERE solicitud.numero_solicitud = ?`
 }
 
 exports.orderBuy = {
-    getOrderBuy: `SELECT * FROM orden_compra`
+    getLogistOrd: `SELECT s.numero_solicitud AS num_sol, i.id_item, i.descripcion_item, um.abreviatura, i.precio, sd.cantidad_solicitado
+    FROM solicitud AS s
+    RIGHT JOIN solicitud_detalle AS sd
+    ON s.numero_solicitud = sd.numero_solicitud
+    INNER JOIN item AS i ON sd.id_item = i.id_item
+    INNER JOIN unidad_medida AS um ON i.id_unidad_medida = um.id_unidad_medida
+    ORDER BY s.numero_solicitud ASC`,
+
+    getOrderBuy: `SELECT * FROM orden_compra`,
+
+    getProvOrd: `SELECT p.RUC AS ruc, p.nombre_proveedor as nombre FROM proveedor AS p`,
+
+    putManagerOrd: ``
 }

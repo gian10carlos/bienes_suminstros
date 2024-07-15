@@ -104,7 +104,7 @@ exports.viewCheckManagerRequest = (req, res) => {
         connection.query(queryO, (err, dataO) => {
             if (err) return res.status(500).send('Error Request');
 
-            return res.status(200).render('administration/manager', { data: combinedData })
+            return res.status(200).render('administration/req_manager', { data: combinedData })
         })
     })
 }
@@ -114,6 +114,17 @@ exports.updatedCheckBossRequest = async (req, res) => {
     const query = queries.request.putBossReq;
 
     connection.query(query, [id.requestId], (err) => {
+        if (err) return res.status(500).send('Error Request');
+        return res.status(200).json({ message: 'Successful updated' })
+    })
+}
+
+exports.updateCheckManagerOrder = async (req, res) => {
+    const id = await req.body;
+    const date = new Date();
+    const query = queries.request.putManagerReq;
+
+    connection.query(query, [date, id.requestId], (err, r) => {
         if (err) return res.status(500).send('Error Request');
         return res.status(200).json({ message: 'Successful updated' })
     })
@@ -148,7 +159,6 @@ function combineData(data) {
         }
     });
 
-    // Convertir el objeto resultado en un arreglo de objetos (si es necesario)
     let combinedArray = Object.values(combinedResult);
 
     return combinedArray;
