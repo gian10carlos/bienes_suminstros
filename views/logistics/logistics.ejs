@@ -56,36 +56,43 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <%if(dataR){ %>
-                                        <% for(let i=0; i < dataR.length; i++){ %>
+                                    <% if (dataR) { %>
+                                        <% for (let i=0; i < dataR.length; i++) { %>
                                             <tr>
-                                                <th scope="row">
-                                                    <p id="num_sol"><%- dataR[i].num_sol %></p>
-                                                </th>
-                                                <td>
-                                                    <% for(let j=0; j < dataR[i].items.length; j++){ %>
-                                                        <p><%- dataR[i].items[j].descripcion_item %> x <%-
-                                                                    dataR[i].items[j].cantidad_solicitado %>
-                                                                    <%- dataR[i].items[j].unidad %></p>
-                                                        <% } %>
-                                                </td>
-                                                <td>
-                                                    <input type="date" name="date_entr" id="date_entr" required>
-                                                </td>
-                                                <td>
-                                                    <select class="form-control" id="proveedor" required>
-                                                        <option disabled selected>Proveedor--</option>
-                                                        <% for(let i=0 ; i < dataP.length; i++){ %>
-                                                            <option value="<%- dataP[i].ruc %>"><%- dataP[i].nombre %>
-                                                            </option>
+                                                <form action="" method="post">
+                                                    <th scope="row">
+                                                        <p><%- dataR[i].num_sol %></p>
+                                                        <input type="hidden" name="num_sol" id="num_sol"
+                                                            value="<%- dataR[i].num_sol %>">
+                                                    </th>
+                                                    <td>
+                                                        <% for (let j=0; j < dataR[i].items.length; j++) { %>
+                                                            <p><%- dataR[i].items[j].descripcion_item %> x <%-
+                                                                        dataR[i].items[j].cantidad_solicitado %> <%-
+                                                                            dataR[i].items[j].unidad %></p>
                                                             <% } %>
-                                                    </select>
-                                                </td>
-                                                <td><button class="btn btn-success" onclick="saveOrderBuy()">✅</button>
-                                                </td>
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" name="date_entr" id="date_entr" required>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control" name="proveedor" id="proveedor"
+                                                            required>
+                                                            <option disabled selected>Proveedor--</option>
+                                                            <% for (let i=0; i < dataP.length; i++) { %>
+                                                                <option value="<%- dataP[i].ruc %>"><%- dataP[i].nombre
+                                                                        %></option>
+                                                                <% } %>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-success" type="submit">✅</button>
+                                                    </td>
+                                                </form>
                                             </tr>
                                             <% } %>
                                                 <% } %>
+
                                 </tbody>
                             </table>
                         </div>

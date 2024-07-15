@@ -1,4 +1,10 @@
-async function saveOrderBuy() {
+
+
+
+const form = document.querySelector('form');
+form.addEventListener('submit', async function (event) {
+    event.preventDefault();
+
     const num_sol = document.getElementById('num_sol').value;
     const date_entr = document.getElementById('date_entr').value;
     const proveedor = document.getElementById('proveedor').value;
@@ -17,12 +23,22 @@ async function saveOrderBuy() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ data })
+            body: JSON.stringify(data)
         });
 
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
+
+        const result = await response.json();
+
+        await Swal.fire({
+            position: "center",
+            icon: "success",
+            title: result.message,
+            showConfirmButton: false,
+            timer: 1500
+        });
 
         location.reload();
     } catch (error) {
@@ -34,4 +50,4 @@ async function saveOrderBuy() {
             timer: 1500
         });
     }
-}
+});

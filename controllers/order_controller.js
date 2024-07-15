@@ -44,19 +44,12 @@ exports.viewCheckLogistic = (req, res) => {
 
 
 exports.saveOrderBuy = async (req, res) => {
-    const data = await req.body;
+    const dataForm = await req.body;
 
-    console.log(data)
-
-    const requestParams = [
-        data.number,
-        data.responsable,
-        data.date,
-        data.meta,
-    ];
-
-    const requestQuery = queries.request.postRequest;
-    const requestDescQuery = queries.request.postRequestDesc;
+    const idQuery = queries.orderBuy.getEndId;
+    const itemsQuery = queries.orderBuy.getItemsOrd;
+    const ocQuery = queries.orderBuy.postLogistOrd;
+    const ocdQuery = queries.orderBuy.postLogistOrD;
 
     connection.getConnection((err, conn) => {
         if (err) { return res.status(500).json({ message: 'Error DB connection' + err }); }
@@ -64,7 +57,7 @@ exports.saveOrderBuy = async (req, res) => {
         conn.beginTransaction((err) => {
             if (err) { conn.release(); return res.status(500).json({ message: 'Error transaction' + err }); }
 
-            conn.query(requestQuery, [requestParams[0], requestParams[1], requestParams[2], requestParams[3]], (err) => {
+            conn.query(idQuery, (err, id_oc_stg) => {
                 if (err) {
                     return conn.rollback(() => {
                         conn.release();
@@ -72,10 +65,18 @@ exports.saveOrderBuy = async (req, res) => {
                     })
                 }
 
-                productsArray = data.products;
-                const descriptionVal = productsArray.map(item => [item.unidMed, item.cantidad, requestParams[0], item.id, item.valUnit, null])
+                const id_oc = parseInt(id_oc_stg[0].id_oc.substring(2));
+                var orderId = 0;
 
-                conn.query(requestDescQuery, [descriptionVal], (err) => {
+                if (id_oc < 10) {
+                    orderId = `OC00${id_oc + 1}`
+                } else if (orderId > 9 && orderId < 100) {
+                    orderId = `OC0${id_oc + 1}`
+                } else {
+                    orderId = `OC${id_oc + 1}`
+                }
+
+                conn.query(itemsQuery, [dataForm.num_sol], (err, dataItems) => {
                     if (err) {
                         return conn.rollback(() => {
                             conn.release();
@@ -83,16 +84,59 @@ exports.saveOrderBuy = async (req, res) => {
                         });
                     }
 
-                    conn.commit((err) => {
+                    const groupedData = dataItems.reduce((acc, item) => {
+                        const { numero_solicitud, ...rest } = item;
+                        if (!acc[numero_solicitud]) {
+                            acc[numero_solicitud] = {
+                                numero_solicitud,
+                                items: []
+                            };
+                        }
+                        acc[numero_solicitud].items.push(rest);
+                        return acc;
+                    }, {});
+
+                    const finalData = Object.values(groupedData);
+                    const dataProducts = finalData[0].items;
+
+                    const data = {
+                        num_oc: orderId,
+                        date: new Date(),
+                        ruc: dataForm.proveedor,
+                        dataProducts
+                    }
+
+                    console.log(data)
+
+                    conn.query(ocQuery, [data.num_oc, data.date, data.ruc], (err) => {
                         if (err) {
                             return conn.rollback(() => {
                                 conn.release();
-                                res.status(500).json({ message: 'Commit Error: ' + err });
-                            });
+                                res.status(500).json({ message: 'Commit Error' + err });
+                            })
                         }
 
-                        conn.release();
-                        return res.status(200).json({ message: 'Successful register order' })
+                        const ocDescription = data.dataProducts.map(item => [item.unidad, item.cantidad_solicitado, item.precio, data.num_oc, item.id_item])
+
+                        conn.query(ocdQuery, [ocDescription], (err) => {
+                            if (err) {
+                                return conn.rollback(() => {
+                                    conn.release();
+                                    res.status(500).json({ message: 'Commit Error' + err });
+                                })
+                            }
+                            conn.commit((err) => {
+                                if (err) {
+                                    return conn.rollback(() => {
+                                        conn.release();
+                                        res.status(500).json({ message: 'Commit Error: ' + err });
+                                    });
+                                }
+
+                                conn.release();
+                                return res.status(200).json({ message: 'Successful register order' + finalData })
+                            })
+                        })
                     })
                 })
             })

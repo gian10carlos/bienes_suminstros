@@ -55,5 +55,21 @@ exports.orderBuy = {
 
     getProvOrd: `SELECT p.RUC AS ruc, p.nombre_proveedor as nombre FROM proveedor AS p`,
 
+    getEndId: `SELECT oc.numero_orden_compra AS id_oc
+    FROM orden_compra AS oc
+    ORDER BY oc.numero_orden_compra DESC LIMIT 1`,
+
+    getItemsOrd: `SELECT s.numero_solicitud, sd.unidad, i.id_item, sd.cantidad_solicitado, sd.precio
+    FROM solicitud AS s
+    RIGHT JOIN solicitud_detalle AS sd ON sd.numero_solicitud = s.numero_solicitud
+    INNER JOIN item AS i ON i.id_item = sd.id_item
+    WHERE s.numero_solicitud = ?`,
+
+    postLogistOrd: `INSERT INTO orden_compra (numero_orden_compra, fecha_orden_compra, RUC) 
+    VALUES (?,?,?)`,
+
+    postLogistOrD: `INSERT INTO orden_compra_detalle(unidad, cantidad_solicitado, precio, numero_orden_compra, id_item) 
+    VALUES ?`,
+
     putManagerOrd: ``
 }
