@@ -1,6 +1,6 @@
 exports.login = {
     checkUser: `SELECT DNI AS dni, id_area AS area, id_cargo AS cargo
-    FROM contrato WHERE dni = ?`,
+    FROM contrato WHERE dni = ? AND dni = ?`,
 }
 
 exports.request = {
@@ -37,6 +37,11 @@ exports.request = {
     WHERE s.autorizacion_administracion = 1 AND s.autorizacion_jefe_area = 1 AND sd.cantidad_entregado IS NULL
     ORDER BY s.numero_solicitud ASC`,
 
+    getExistPec: `SELECT CASE WHEN s.numero_pecosa IS NULL THEN 0 ELSE 1 END AS val 
+    FROM solicitud AS s WHERE s.numero_solicitud = ?`,
+
+    getEndPec: `SELECT s.numero_pecosa AS id FROM solicitud AS s ORDER BY s.numero_pecosa DESC LIMIT 1`,
+
     postRequest: `INSERT INTO solicitud (numero_solicitud, responsable, fecha_solicitud, id_meta)
     VALUES (?, ?, ?, ?)`,
 
@@ -48,7 +53,11 @@ exports.request = {
     WHERE solicitud.numero_solicitud = ?`,
 
     putManagerReq: `UPDATE solicitud SET solicitud.autorizacion_administracion = 1, solicitud.fecha_salida = ? 
-    WHERE solicitud.numero_solicitud = ?`
+    WHERE solicitud.numero_solicitud = ?`,
+
+    putFinalReq: `UPDATE solicitud AS s SET s.numero_pecosa = ?, s.fecha_entrega = ? WHERE s.numero_solicitud = ?  AND s.autorizacion_administracion = 1`,
+
+    putFinalSdReq: `UPDATE solicitud_detalle AS sd SET sd.cantidad_entregado = ? WHERE sd.id_item = ? AND sd.numero_solicitud = ?`,
 }
 
 exports.orderBuy = {
@@ -82,6 +91,10 @@ exports.orderBuy = {
     INNER JOIN unidad_medida AS um ON um.id_unidad_medida = i.id_unidad_medida 
     WHERE oc.autoriza_administracion = 1 AND ocd.cantidad_entregado IS NULL`,
 
+    getExistFactOrd: `SELECT CASE WHEN oc.numero_facura_entrega IS NULL THEN 0 ELSE 1 END AS val FROM orden_compra AS oc WHERE oc.numero_orden_compra=?`,
+
+    getEndFactOrd: `SELECT oc.numero_facura_entrega AS id FROM orden_compra AS oc GROUP BY oc.numero_facura_entrega DESC LIMIT 1`,
+
     postLogistOrd: `INSERT INTO orden_compra (numero_orden_compra, fecha_orden_compra, fecha_entrega, RUC) 
     VALUES (?,?,?,?)`,
 
@@ -89,5 +102,9 @@ exports.orderBuy = {
     VALUES ?`,
 
     putManagerOrd: `UPDATE orden_compra AS oc SET oc.autoriza_administracion = 1 
-    WHERE oc.numero_orden_compra = ?`
+    WHERE oc.numero_orden_compra = ?`,
+
+    putOcFinalOrd: `UPDATE orden_compra AS oc SET oc.fecha_entregado = ?, oc.numero_facura_entrega = ? WHERE oc.numero_orden_compra = ? AND oc.autoriza_administracion = 1`,
+
+    putOcdFinalOrd: `UPDATE orden_compra_detalle AS ocd SET ocd.cantidad_entregado = ? WHERE ocd.numero_orden_compra = ? AND ocd.id_item = ?`,
 }

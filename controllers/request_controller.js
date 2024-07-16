@@ -31,8 +31,6 @@ exports.saveRequest = async (req, res) => {
                 productsArray = data.products;
                 const descriptionVal = productsArray.map(item => [item.unidMed, item.cantidad, requestParams[0], item.id, item.valUnit, null])
 
-                console.log(descriptionVal)
-
                 conn.query(requestDescQuery, [descriptionVal], (err) => {
                     if (err) {
                         return conn.rollback(() => {

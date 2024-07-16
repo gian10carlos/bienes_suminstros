@@ -9,6 +9,7 @@ async function finalRequest(button) {
         amount_req,
     }
 
+    console.log(data)
     try {
         const response = await fetch('/request/update/final/warehouse', {
             method: 'POST',
