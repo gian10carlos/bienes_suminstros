@@ -9,7 +9,6 @@ async function finalRequest(button) {
         amount_req,
     }
 
-    console.log(data)
     try {
         const response = await fetch('/request/update/final/warehouse', {
             method: 'POST',
@@ -55,8 +54,6 @@ async function finalOrderBuy(button) {
         id_item,
         amount_ord,
     }
-
-    console.log(data)
 
     try {
         const response = await fetch('/order/update/final/warehouse', {
