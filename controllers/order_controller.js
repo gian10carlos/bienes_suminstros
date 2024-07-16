@@ -68,9 +68,9 @@ exports.saveOrderBuy = async (req, res) => {
                 const id_oc = parseInt(id_oc_stg[0].id_oc.substring(2));
                 var orderId = 0;
 
-                if (id_oc < 10) {
+                if (id_oc < 9) {
                     orderId = `OC00${id_oc + 1}`
-                } else if (orderId > 9 && orderId < 100) {
+                } else if (id_oc >= 9 && id_oc < 100) {
                     orderId = `OC0${id_oc + 1}`
                 } else {
                     orderId = `OC${id_oc + 1}`
@@ -102,13 +102,12 @@ exports.saveOrderBuy = async (req, res) => {
                     const data = {
                         num_oc: orderId,
                         date: new Date(),
+                        date_entr: dataForm.date_entr,
                         ruc: dataForm.proveedor,
                         dataProducts
                     }
 
-                    console.log(data)
-
-                    conn.query(ocQuery, [data.num_oc, data.date, data.ruc], (err) => {
+                    conn.query(ocQuery, [data.num_oc, data.date, data.date_entr, data.ruc], (err) => {
                         if (err) {
                             return conn.rollback(() => {
                                 conn.release();
@@ -118,13 +117,14 @@ exports.saveOrderBuy = async (req, res) => {
 
                         const ocDescription = data.dataProducts.map(item => [item.unidad, item.cantidad_solicitado, item.precio, data.num_oc, item.id_item])
 
-                        conn.query(ocdQuery, [ocDescription], (err) => {
+                        conn.query(ocdQuery, [ocDescription], (err, results) => {
                             if (err) {
                                 return conn.rollback(() => {
                                     conn.release();
                                     res.status(500).json({ message: 'Commit Error' + err });
                                 })
                             }
+
                             conn.commit((err) => {
                                 if (err) {
                                     return conn.rollback(() => {
@@ -134,7 +134,7 @@ exports.saveOrderBuy = async (req, res) => {
                                 }
 
                                 conn.release();
-                                return res.status(200).json({ message: 'Successful register order' + finalData })
+                                return res.status(200).json({ message: 'Successful register order' })
                             })
                         })
                     })
@@ -144,3 +144,21 @@ exports.saveOrderBuy = async (req, res) => {
     })
 }
 
+exports.viewCheckManager = (req, res) => {
+    const queryO = queries.orderBuy.getOrderBuy;
+    connection.query(queryO, (err, result) => {
+        if (err) return res.status(500).send('Error Request');
+
+        return res.status(200).render('administration/ord_manager', { data: result })
+    })
+}
+
+exports.updateCheckManagerOrder = async (req, res) => {
+    const id = await req.body;
+    const query = queries.orderBuy.putManagerOrd;
+
+    connection.query(query, [id.orderId], (err) => {
+        if (err) return res.status(500).send('Error Request');
+        return res.status(200).json({ message: 'Successful updated' })
+    })
+}

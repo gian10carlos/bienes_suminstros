@@ -30,22 +30,28 @@ exports.checkUser = (req, res) => {
     })
 }
 
-exports.viewAsset = (req, res) => {
-    console.log('From asset')
-    return res.render('asset/asset')
+exports.viewWarehouseReq = (req, res) => {
+    const query = queries.request.getWarehouseReq;
+
+    connection.query(query, (err, data) => {
+        if (err) return res.status(500).json({ message: 'Error get' });
+        return res.render('warehouse/req_warehouse', { data })
+    })
 }
 
-exports.viewLogistics = (req, res) => {
-    console.log('From Logistics')
-    return res.render('logistics/logistics')
+exports.viewWarehouseOrd = (req, res) => {
+    const query = queries.orderBuy.getWarehouseOrd;
+
+    connection.query(query, (err, data) => {
+        if (err) return res.status(500).json({ message: 'Error get' });
+        return res.render('warehouse/ord_warehouse', { data })
+    })
 }
 
-exports.viewUserdepart = (req, res) => {
-    console.log('From userdepart')
-    return res.render('userdepart/userdepart')
+exports.updatedFinalReq = (req, res) => {
+    /* LOGICA ACUALIZAR, CREAR UNICA PECOSA, ACTUALIZAR RESTO PRODUCTOS SOBRE ELLA */
 }
 
-exports.viewWarehouse = (req, res) => {
-    console.log('From warehouse')
-    return res.render('warehouse/warehouse')
+exports.updatedFinalOrd = (req, res) => {
+    /* LOGICA ACUALIZAR, CREAR UNICA FACTURA, ACTUALIZAR RESTO PRODUCTOS SOBRE ELLA */
 }

@@ -1,0 +1,72 @@
+* {
+    margin: 0px;
+    padding: 0px;
+
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(217, 217, 217, 0.5);
+}
+
+.section-header {
+    width: 100%;
+    height: 7vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgb(27, 167, 198);
+}
+
+.section-header p {
+    font-family: 'Abril Fatface';
+    font-size: 30px;
+}
+
+.section-header a {
+    font-size: 15px;
+    text-decoration: none;
+    color: black;
+}
+
+/* principal */
+.container-hero {
+    width: 100%;
+    height: 93vh;
+    display: flex;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+/* seccion formulario */
+.col-form {
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+}
+
+.section-form {
+    width: 90%;
+    height: 80%;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f4f6f9;
+    border-radius: 4%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+form {
+    width: 100%;
+    height: 100%;
+}
+
+.container-table {
+    display: flex;
+    max-height: 23rem;
+    overflow-y: scroll;
+}

@@ -73,8 +73,7 @@ exports.viewRequest = (req, res) => {
 
                 connection.query(queryI, (err, resultI) => {
                     if (err) return res.status(500).send('Error Request');
-
-                    let numberId = parseInt(resultI[0].numero_solicitud.slice(-1));
+                    let numberId = parseInt(resultI[0].numero_solicitud.substring(2));
 
                     return res.render('userdepart/request', { resultP, resultM, resultA, numberId });
                 })
@@ -96,18 +95,12 @@ exports.viewCheckBossRequest = (req, res) => {
 
 exports.viewCheckManagerRequest = (req, res) => {
     const queryR = queries.request.getManagerReq;
-    const queryO = queries.orderBuy.getOrderBuy;
 
     connection.query(queryR, (err, dataR) => {
         if (err) return res.status(500).send('Error Request');
 
         const combinedData = combineData(dataR);
-
-        connection.query(queryO, (err, dataO) => {
-            if (err) return res.status(500).send('Error Request');
-
-            return res.status(200).render('administration/req_manager', { data: combinedData })
-        })
+        return res.status(200).render('administration/req_manager', { data: combinedData })
     })
 }
 

@@ -73,9 +73,9 @@ form.addEventListener('submit', async function (event) {
 
 function setIdRequest() {
     const numberReqId = document.getElementById('numeroSolicitud');
-    if (numberReq < 10) {
+    if (numberReq < 9) {
         numberReqId.value = `S00${numberReq + 1}`
-    } else if (numberReqId > 9 && numberReqId < 100) {
+    } else if (numberReq >= 9 && numberReq < 100) {
         numberReqId.value = `S0${numberReq + 1}`
     } else {
         numberReqId.value = `S${numberReq + 1}`

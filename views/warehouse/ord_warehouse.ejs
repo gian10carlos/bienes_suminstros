@@ -3,7 +3,7 @@
 
 <head>
     <!-- titulo -->
-    <title>Administracion</title>
+    <title>Almacen</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,7 +18,7 @@
         type="image/x-icon">
 
     <!-- css -->
-    <link rel="stylesheet" href="/admin/style.css">
+    <link rel="stylesheet" href="/warehouse/style.css">
 
     <!-- google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,9 +33,9 @@
 <body>
 
     <section class="section-header">
-        <p class="m-0">Administracion</p>
-        <a href="/request/validate/manager">Autorizar Solicitud</a>
-        <a href="/order/validate/manager">Autorizar Orden Compra</a>
+        <p class="m-0">Almacen</p>
+        <a href="/request/final/warehouse">Distribuir Solicitud</a>
+        <a href="/order/final/warehouse">Distribuir Orden Compra</a>
         <a href="/">Cerrar Sesion</a>
     </section>
 
@@ -45,37 +45,39 @@
                 <div class=" col col-12  d-flex justify-content-between">
 
                     <div class="col col-12">
-                        <h2>Solicitud</h2>
+                        <h2>Orden Compra</h2>
                         <div class="container-table">
                             <table class="table table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Responsable</th>
-                                        <th scope="col">Fecha</th>
-                                        <th scope="col">Meta</th>
-                                        <th scope="col">Productos</th>
-                                        <th scope="col">Autorizar</th>
+                                        <th scope="col">Producto</th>
+                                        <th scope="col">Abrev</th>
+                                        <th scope="col">Precio</th>
+                                        <th scope="col">Cant. Solic</th>
+                                        <th scope="col">Cant. Recib</th>
+                                        <th scope="col">Finalizar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <%if(data){ %>
                                         <% for(let i=0; i < data.length; i++){ %>
                                             <tr>
-                                                <th scope="row"><%- data[i].numero_solicitud %></th>
-                                                <td><%- data[i].responsable %></td>
-                                                <td><%- data[i].fecha_solicitud %></td>
-                                                <td><%- data[i].descripcion_meta %></td>
+                                                <th scope="row"><%- data[i].num_oc %></th>
                                                 <td>
-                                                    <% for(let j=0; j < data[i].items.length; j++){ %>
-                                                        <p><%- data[i].items[j].descripcion_item %> x <%-
-                                                                    data[i].items[j].cantidad_solicitado %>
-                                                                    <%- data[i].items[j].unidad %></p>
-                                                        <% } %>
+                                                    <%- data[i].descr %>
+                                                        <input type="hidden" value="<%- data[i].id_item %>"
+                                                            name="id_item">
                                                 </td>
-
+                                                <td><%- data[i].abrev %></td>
+                                                <td><%- data[i].price %></td>
+                                                <td><%- data[i].amount_req %></td>
+                                                <td>
+                                                    <input style="width: 28px; max-width: 28px;" type="text"
+                                                        id="amount_ord" name="amount_ord">
+                                                </td>
                                                 <td><button class="btn btn-success"
-                                                        onclick="postLogistic(this)">✅</button>
+                                                        onclick="finalOrderBuy(this)">✅</button>
                                                 </td>
                                             </tr>
                                             <% } %>
@@ -99,7 +101,7 @@
         integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
         </script>
 
-    <script src="/admin/script.js"></script>
+    <script src="/warehouse/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 

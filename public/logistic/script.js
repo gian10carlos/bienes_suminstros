@@ -1,24 +1,16 @@
-
-
-
-const form = document.querySelector('form');
-form.addEventListener('submit', async function (event) {
-    event.preventDefault();
-
-    const num_sol = document.getElementById('num_sol').value;
-    const date_entr = document.getElementById('date_entr').value;
-    const proveedor = document.getElementById('proveedor').value;
+async function setCreateOrderBuy(button) {
+    var num_sol = button.parentElement.parentElement.querySelector('th').innerText;
+    var date_entr = button.parentElement.parentElement.querySelector('[name="date_entr"]').value;
+    var proveedor = button.parentElement.parentElement.querySelector('[name="proveedor"]').value;
 
     const data = {
         num_sol: num_sol,
         date_entr: date_entr,
         proveedor: proveedor,
-    }
-
-    console.log(data)
+    };
 
     try {
-        const response = await fetch('/order/create/logistic', {
+        const response = await fetch('/order/buy/create/logistics', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -50,4 +42,4 @@ form.addEventListener('submit', async function (event) {
             timer: 1500
         });
     }
-});
+}

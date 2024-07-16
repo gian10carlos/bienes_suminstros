@@ -41,7 +41,6 @@
         <div class="col-form">
             <section class="section-form">
                 <div class=" col col-12  d-flex justify-content-between">
-
                     <div class="col col-12">
                         <h2>Crear Orden Compra</h2>
                         <div class="container-table">
@@ -59,40 +58,37 @@
                                     <% if (dataR) { %>
                                         <% for (let i=0; i < dataR.length; i++) { %>
                                             <tr>
-                                                <form action="" method="post">
-                                                    <th scope="row">
-                                                        <p><%- dataR[i].num_sol %></p>
-                                                        <input type="hidden" name="num_sol" id="num_sol"
-                                                            value="<%- dataR[i].num_sol %>">
-                                                    </th>
-                                                    <td>
-                                                        <% for (let j=0; j < dataR[i].items.length; j++) { %>
-                                                            <p><%- dataR[i].items[j].descripcion_item %> x <%-
-                                                                        dataR[i].items[j].cantidad_solicitado %> <%-
-                                                                            dataR[i].items[j].unidad %></p>
+                                                <th scope="row">
+                                                    <p><%- dataR[i].num_sol %></p>
+                                                    <input type="hidden" name="num_sol" id="num_sol"
+                                                        value="<%- dataR[i].num_sol %>">
+                                                </th>
+                                                <td>
+                                                    <% for (let j=0; j < dataR[i].items.length; j++) { %>
+                                                        <p><%- dataR[i].items[j].descripcion_item %> x <%-
+                                                                    dataR[i].items[j].cantidad_solicitado %> <%-
+                                                                        dataR[i].items[j].unidad %></p>
+                                                        <% } %>
+                                                </td>
+                                                <td>
+                                                    <input type="date" name="date_entr" required>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control" name="proveedor" required>
+                                                        <option disabled selected>Proveedor--</option>
+                                                        <% for (let i=0; i < dataP.length; i++) { %>
+                                                            <option value="<%- dataP[i].ruc %>"><%- dataP[i].nombre %>
+                                                            </option>
                                                             <% } %>
-                                                    </td>
-                                                    <td>
-                                                        <input type="date" name="date_entr" id="date_entr" required>
-                                                    </td>
-                                                    <td>
-                                                        <select class="form-control" name="proveedor" id="proveedor"
-                                                            required>
-                                                            <option disabled selected>Proveedor--</option>
-                                                            <% for (let i=0; i < dataP.length; i++) { %>
-                                                                <option value="<%- dataP[i].ruc %>"><%- dataP[i].nombre
-                                                                        %></option>
-                                                                <% } %>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <button class="btn btn-success" type="submit">✅</button>
-                                                    </td>
-                                                </form>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-success"
+                                                        onclick="setCreateOrderBuy(this)">✅</button>
+                                                </td>
                                             </tr>
                                             <% } %>
                                                 <% } %>
-
                                 </tbody>
                             </table>
                         </div>
